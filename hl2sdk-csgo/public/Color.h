@@ -273,6 +273,7 @@ public:
 	static Color Red()		{ return Color(255, 0, 0); }
 	static Color Green()	{ return Color(0, 255, 0); }
 	static Color Blue()		{ return Color(0, 0, 255); }
+	static Color LightBlue(){ return Color(100, 100, 255); }
 	static Color Grey()		{ return Color(128, 128, 128); }
 	static Color DarkGrey()	{ return Color(45, 45, 45); }
 	static Color Black()	{ return Color(0, 0, 0); }

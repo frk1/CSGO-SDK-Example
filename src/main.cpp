@@ -12,6 +12,7 @@ IVModelRender* modelrender;
 IVRenderView* render;
 IViewRender* view;
 IFileSystem* filesystem;
+IVDebugOverlay* g_pDebugOverlay;
 
 CInput* g_pInput;
 CViewRender* g_pViewRender;
@@ -43,6 +44,8 @@ CreateInterfaceFn FileSysFactory = NULL;
 
 bool name;
 int screenWidth, screenHeight;
+
+void SpitShit();
 
 void DrawString(int x, int y, Color clr, vgui::HFont font, const char *pszText)
 {
@@ -180,11 +183,12 @@ DWORD WINAPI Init(LPVOID lpArguments)
 	g_pInputSystem = (IInputSystem*)InputSystemFactory(INPUTSYSTEM_INTERFACE_VERSION, NULL);
 	filesystem = (IFileSystem*)FileSysFactory(BASEFILESYSTEM_INTERFACE_VERSION, NULL);
 	g_pCVar = (ICvar*)CvarFactory(CVAR_INTERFACE_VERSION, NULL);
-
+	
 	materials = (IMaterialSystem*)MatSysFactory(MATERIAL_SYSTEM_INTERFACE_VERSION, NULL);
 	studiorender = g_pStudioRender = (IStudioRender*)StudioRenderFactory(STUDIO_RENDER_INTERFACE_VERSION, NULL);
 	modelrender = (IVModelRender*)EngineFactory(VENGINE_HUDMODEL_INTERFACE_VERSION, NULL);
 	render = (IVRenderView*)EngineFactory(VENGINE_RENDERVIEW_INTERFACE_VERSION, NULL);
+	g_pDebugOverlay = (IVDebugOverlay*)EngineFactory(VDEBUG_OVERLAY_INTERFACE_VERSION, NULL);
 
 
 	g_pCVar->ConsoleColorPrintf(Color::Purple(), "-------------------------------\n"
@@ -193,6 +197,8 @@ DWORD WINAPI Init(LPVOID lpArguments)
 
 	pPanelHook = new CVMTHookManager((PDWORD*)g_pVGuiPanel);
 	oPaintTraverse = (tPaintTraverse)pPanelHook->dwHookMethod((DWORD)hkPaintTraverse, 41);
+
+	SpitShit();                
 
 	g_pNetVars = new CNetVars();
 	offys.dwEyePosOffset = (DWORD)g_pNetVars->GetOffset("DT_BasePlayer", "m_vecViewOffset[0]");
@@ -222,4 +228,31 @@ DWORD WINAPI DllMain(HMODULE hDll, DWORD dwReasonForCall, LPVOID lpReserved)
 		return 1;
 	}
 	return 0;
+}
+
+void SpitShit()
+{
+#ifdef DEBUG_ENABLED
+
+	g_pCVar->ConsoleColorPrintf(Color::LightBlue(), "client.dll: 0x%X\n", offys.dwClientBase);
+	g_pCVar->ConsoleColorPrintf(Color::LightBlue(), "engine.dll: 0x%X\n", offys.dwEngineBase);
+	g_pCVar->ConsoleColorPrintf(Color::LightBlue(), "filesystem_stdio.dll: 0x%X\n", offys.dwFileSysBase);
+	g_pCVar->ConsoleColorPrintf(Color::LightBlue(), "materialsystem.dll: 0x%X\n", offys.dwMatSysBase);
+
+	g_pCVar->ConsoleColorPrintf(Color::LightBlue(), "filesystem: 0x%X\n", (DWORD)filesystem);
+	g_pCVar->ConsoleColorPrintf(Color::LightBlue(), "g_pGlobals: 0x%X\n", (DWORD)g_pGlobals);
+	g_pCVar->ConsoleColorPrintf(Color::LightBlue(), "clientdll: 0x%X\n", (DWORD)clientdll);
+	g_pCVar->ConsoleColorPrintf(Color::LightBlue(), "engine: 0x%X\n", (DWORD)engine);
+	g_pCVar->ConsoleColorPrintf(Color::LightBlue(), "modelrender: 0x%X\n", (DWORD)modelrender);
+	g_pCVar->ConsoleColorPrintf(Color::LightBlue(), "g_pClientMode: 0x%X\n", (DWORD)g_pClientMode);
+	g_pCVar->ConsoleColorPrintf(Color::LightBlue(), "g_pInput: 0x%X\n", (DWORD)g_pInput);
+	g_pCVar->ConsoleColorPrintf(Color::LightBlue(), "g_pVGuiSurface: 0x%X\n", (DWORD)g_pVGuiSurface);
+	g_pCVar->ConsoleColorPrintf(Color::LightBlue(), "g_pVGuiPanel: 0x%X\n", (DWORD)g_pVGuiPanel);
+	g_pCVar->ConsoleColorPrintf(Color::LightBlue(), "g_pInputSystem: 0x%X\n", (DWORD)g_pInputSystem);
+	g_pCVar->ConsoleColorPrintf(Color::LightBlue(), "g_pDebugOverlay: 0x%X\n", (DWORD)g_pDebugOverlay);
+
+	g_pCVar->ConsoleColorPrintf(Color::LightBlue(), "g_pGlowObjectManager: 0x%X\n", (DWORD)g_pGlowObjectManager - offys.dwClientBase);
+	g_pCVar->ConsoleColorPrintf(Color::LightBlue(), "g_dwTraceLine: 0x%X\n", offys.dwTraceLine - offys.dwClientBase);
+
+#endif
 }
