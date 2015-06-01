@@ -51,6 +51,7 @@
 #include "game\\client\\glow_outline_effect.h"
 
 // Engine
+#include "engine\\client.h"
 #include "public\\engine\\ivmodelrender.h"
 #include "public\\engine\\ivdebugoverlay.h"
 #include "public\\engine\\ivmodelinfo.h"

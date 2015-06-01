@@ -198,7 +198,7 @@ DWORD WINAPI Init(LPVOID lpArguments)
 	pPanelHook = new CVMTHookManager((PDWORD*)g_pVGuiPanel);
 	oPaintTraverse = (tPaintTraverse)pPanelHook->dwHookMethod((DWORD)hkPaintTraverse, 41);
 
-	SpitShit();                
+	SpitShit();             
 
 	g_pNetVars = new CNetVars();
 	offys.dwEyePosOffset = (DWORD)g_pNetVars->GetOffset("DT_BasePlayer", "m_vecViewOffset[0]");
