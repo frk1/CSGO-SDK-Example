@@ -1,4 +1,4 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright Â© 1996-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose: 
 //
@@ -312,8 +312,8 @@ public:
 abstract_class IStudioRender : public IAppSystem
 {
 public:
-	virtual void BeginFrame(void) = 0; // 8
-	virtual void EndFrame(void) = 0;
+	virtual void BeginFrame(void) = 0; // 9
+	virtual void EndFrame(void) = 0; // 10
 
 	// Used for the mat_stub console command.
 	virtual void Mat_Stub(IMaterialSystem *pMatSys) = 0;
@@ -355,7 +355,7 @@ public:
 	virtual void SetAlphaModulation(float flAlpha) = 0;
 
 	// Draws the model
-	virtual void DrawModel(DrawModelResults_t *pResults, const DrawModelInfo_t& info,
+	virtual void DrawModel(DrawModelResults_t *pResults, const DrawModelInfo_t& info, // 29
 		matrix3x4_t *pBoneToWorld, float *pFlexWeights, float *pFlexDelayedWeights, const Vector &modelOrigin, int flags = STUDIORENDER_DRAW_ENTIRE_MODEL) = 0;
 
 	// Methods related to static prop rendering
@@ -364,7 +364,7 @@ public:
 	virtual void DrawStaticPropShadows(const DrawModelInfo_t &drawInfo, const matrix3x4_t &modelToWorld, int flags) = 0;
 
 	// Causes a material to be used instead of the materials the model was compiled with
-	virtual void ForcedMaterialOverride(IMaterial *newMaterial, OverrideType_t nOverrideType = OVERRIDE_NORMAL) = 0; // 32
+	virtual void ForcedMaterialOverride(IMaterial *newMaterial, OverrideType_t nOverrideType = OVERRIDE_NORMAL) = 0; // 33
 
 	// Create, destroy list of decals for a particular model
 	virtual StudioDecalHandle_t CreateDecalList(studiohwdata_t *pHardwareData) = 0;
