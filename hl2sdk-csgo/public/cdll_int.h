@@ -889,7 +889,7 @@ public:
 	virtual bool			SupportsRandomMaps() = 0;
 };
 
-#define CLIENT_DLL_INTERFACE_VERSION		"VClient016"
+#define CLIENT_DLL_INTERFACE_VERSION		"VClient017"
 
 //-----------------------------------------------------------------------------
 // Purpose: Interface exposed from the client .dll back to the engine for specifying shared .dll IAppSystems (e.g., ISoundEmitterSystem)
